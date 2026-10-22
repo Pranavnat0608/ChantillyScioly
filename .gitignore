@@ -1,0 +1,13 @@
+node_modules
+dist
+.env.local
+.env.*.local
+.firebase
+*.log
+
+# Impeccable scratch output
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/questions/
+.impeccable/build/
+.impeccable/hook.cache.json

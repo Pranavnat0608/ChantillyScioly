@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gray-on-color",
+        "value": "*",
+        "files": [
+          "src/index.css"
+        ],
+        "createdAt": "2026-10-22T03:40:15.965Z",
+        "reason": "Claude: L39 is slate-600 text on slate-100 hover (neutral on neutral), not a colored background"
+      }
+    ]
+  }
+}

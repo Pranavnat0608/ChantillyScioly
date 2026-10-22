@@ -1,0 +1,16 @@
+rules_version = '2';
+
+// Only used if you enable file uploads (VITE_ENABLE_STORAGE=true, Blaze plan).
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /teams/{teamId}/resources/{fileName} {
+      function isMember() {
+        return request.auth != null &&
+          firestore.exists(/databases/(default)/documents/teams/$(teamId)/members/$(request.auth.uid));
+      }
+      allow read: if isMember();
+      allow create: if isMember() && request.resource.size < 20 * 1024 * 1024;
+      allow delete: if isMember();
+    }
+  }
+}

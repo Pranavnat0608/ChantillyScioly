@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T00:00:00Z",
+  "title": "Design System: Chantilly Science Olympiad",
+  "extensions": {
+    "colorMeta": {
+      "chantilly-purple": { "role": "primary", "displayName": "Chantilly Purple", "canonical": "#4b2a8a", "tonalRamp": ["#2a1752", "#3b2170", "#4b2a8a", "#5a339c", "#6c46ab", "#8665bd", "#cdbde8", "#f3eff9"] },
+      "purple-deep": { "role": "primary", "displayName": "Purple Deep", "canonical": "#3b2170", "tonalRamp": ["#2a1752", "#3b2170", "#4b2a8a", "#5a339c", "#6c46ab", "#8665bd", "#cdbde8", "#f3eff9"] },
+      "purple-night": { "role": "primary", "displayName": "Purple Night", "canonical": "#2a1752", "tonalRamp": ["#2a1752", "#3b2170", "#4b2a8a", "#5a339c", "#6c46ab", "#8665bd", "#cdbde8", "#f3eff9"] },
+      "fold-line": { "role": "primary", "displayName": "Fold Line", "canonical": "#8665bd", "tonalRamp": ["#2a1752", "#3b2170", "#4b2a8a", "#5a339c", "#6c46ab", "#8665bd", "#a98fd4", "#e6ddf3"] },
+      "lilac-wash": { "role": "primary", "displayName": "Lilac Wash", "canonical": "#e6ddf3", "tonalRamp": ["#3b2170", "#5a339c", "#8665bd", "#a98fd4", "#cdbde8", "#e6ddf3", "#f3eff9", "#faf8fd"] },
+      "lilac-tint": { "role": "primary", "displayName": "Lilac Tint", "canonical": "#f3eff9", "tonalRamp": ["#3b2170", "#5a339c", "#8665bd", "#a98fd4", "#cdbde8", "#e6ddf3", "#f3eff9", "#faf8fd"] },
+      "title-gold": { "role": "secondary", "displayName": "Title Gold", "canonical": "#f2c230", "tonalRamp": ["#3d2e04", "#6b5108", "#9a750b", "#c99a06", "#f2c230", "#f7d66e", "#fbedb8", "#fef9e8"] },
+      "gold-wash": { "role": "secondary", "displayName": "Gold Wash", "canonical": "#fbedb8", "tonalRamp": ["#3d2e04", "#6b5108", "#9a750b", "#c99a06", "#f2c230", "#f7d66e", "#fbedb8", "#fef9e8"] },
+      "signal-red": { "role": "tertiary", "displayName": "Signal Red", "canonical": "oklch(50.5% 0.213 27.518)", "tonalRamp": ["oklch(25.8% 0.092 26.042)", "oklch(39.6% 0.141 25.723)", "oklch(44.4% 0.177 26.899)", "oklch(50.5% 0.213 27.518)", "oklch(57.7% 0.245 27.325)", "oklch(70.4% 0.191 22.216)", "oklch(88.5% 0.062 18.334)", "oklch(97.1% 0.013 17.38)"] },
+      "signal-red-deep": { "role": "tertiary", "displayName": "Signal Red Deep", "canonical": "oklch(44.4% 0.177 26.899)", "tonalRamp": ["oklch(25.8% 0.092 26.042)", "oklch(39.6% 0.141 25.723)", "oklch(44.4% 0.177 26.899)", "oklch(50.5% 0.213 27.518)", "oklch(57.7% 0.245 27.325)", "oklch(70.4% 0.191 22.216)", "oklch(88.5% 0.062 18.334)", "oklch(97.1% 0.013 17.38)"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#141018", "tonalRamp": ["#141018", "#2b2533", "#433c4d", "#5b546a", "#807a8c", "#a8a3b2", "#ddd8e6", "#f6f4f9"] },
+      "board-grey": { "role": "neutral", "displayName": "Board Grey", "canonical": "#ece9f2", "tonalRamp": ["#141018", "#2b2533", "#433c4d", "#5b546a", "#807a8c", "#ddd8e6", "#ece9f2", "#f6f4f9"] },
+      "rule": { "role": "neutral", "displayName": "Rule", "canonical": "#ddd8e6", "tonalRamp": ["#141018", "#2b2533", "#433c4d", "#5b546a", "#807a8c", "#ddd8e6", "#ece9f2", "#f6f4f9"] },
+      "muted-ink": { "role": "neutral", "displayName": "Muted Ink", "canonical": "#5b546a", "tonalRamp": ["#141018", "#2b2533", "#433c4d", "#5b546a", "#807a8c", "#a8a3b2", "#ddd8e6", "#f6f4f9"] },
+      "sheet-white": { "role": "neutral", "displayName": "Sheet White", "canonical": "#ffffff", "tonalRamp": ["#141018", "#2b2533", "#433c4d", "#5b546a", "#807a8c", "#ddd8e6", "#ece9f2", "#ffffff"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page title, one per page, uppercase on a 2px ink rule; 1.875rem on phones." },
+      "headline": { "displayName": "Headline", "purpose": "Event name in its gold title strip; modal titles at 1.25rem." },
+      "title": { "displayName": "Title", "purpose": "Tri-fold panel labels, empty-state titles, results average; sheet headers at 1rem." },
+      "body": { "displayName": "Body", "purpose": "Lists, descriptions, form text; 600 for row titles, 700 for figures." },
+      "label": { "displayName": "Label", "purpose": "Uppercase form labels, footer links, labels on values." },
+      "chip": { "displayName": "Chip", "purpose": "Uppercase state and role tags only." }
+    },
+    "shadows": [
+      { "name": "mount", "value": "0 0 0 4px #4b2a8a, 0 0 0 8px #141018", "purpose": "Zero-blur frame for a white sheet mounted on the purple board: purple gap, then ink mat." }
+    ],
+    "motion": [
+      { "name": "fold-in", "value": "220ms cubic-bezier(0.16, 1, 0.3, 1); from opacity 0.4, translateX(12px)", "purpose": "The one authored motion: the tri-fold slides in when switching events." },
+      { "name": "reduced-motion", "value": "transition and animation durations 0.01ms under prefers-reduced-motion: reduce", "purpose": "Removes fold-in and hover transitions for users who ask." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main action: purple with ink border, near-square.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Save event</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 2px solid #141018; border-radius: 2px; padding: 8px 16px; font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 700; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color 150ms, color 150ms; } .ds-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; } .ds-btn:disabled { opacity: 0.5; cursor: not-allowed; } .ds-btn-primary { background: #4b2a8a; color: #fff; } .ds-btn-primary:hover { background: #3b2170; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Default action and action-styled links: white sheet, gold-wash hover.",
+      "html": "<button class=\"ds-btn ds-btn-secondary\">Log a score</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 2px solid #141018; border-radius: 2px; padding: 8px 16px; font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: background-color 150ms, color 150ms; } .ds-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; } .ds-btn-secondary { background: #fff; color: #141018; } .ds-btn-secondary:hover { background: #fbedb8; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive confirm.",
+      "html": "<button class=\"ds-btn ds-btn-danger\">Delete</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 2px solid #141018; border-radius: 2px; padding: 8px 16px; font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: background-color 150ms; } .ds-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; } .ds-btn-danger { background: oklch(50.5% 0.213 27.518); color: #fff; } .ds-btn-danger:hover { background: oklch(44.4% 0.177 26.899); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Low-weight action such as Cancel or Close.",
+      "html": "<button class=\"ds-btn ds-btn-ghost\">Cancel</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 2px solid transparent; border-radius: 2px; padding: 8px 16px; font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; background: transparent; transition: background-color 150ms, color 150ms; } .ds-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; } .ds-btn-ghost { color: #5b546a; } .ds-btn-ghost:hover { background: #fff; color: #141018; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labeled input: ink border turns purple on focus.",
+      "html": "<label class=\"ds-label\" for=\"ds-f\">Event name</label><input id=\"ds-f\" class=\"ds-input\" placeholder=\"Anatomy and Physiology\" />",
+      "css": ".ds-label { display: block; margin-bottom: 4px; font-family: 'Archivo', ui-sans-serif, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: #141018; } .ds-input { width: 100%; border: 2px solid #141018; border-radius: 2px; background: #fff; padding: 8px 12px; font-family: 'Archivo', ui-sans-serif, sans-serif; font-size: 0.875rem; color: #141018; caret-color: #4b2a8a; outline: none; } .ds-input:focus { border-color: #4b2a8a; } .ds-input:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; }"
+    },
+    {
+      "name": "Status Chips",
+      "kind": "chip",
+      "refersTo": "chip-not-started",
+      "description": "The fixed status vocabulary: Not started, In progress, Ready.",
+      "html": "<span class=\"ds-chip ds-chip-ns\">Not started</span> <span class=\"ds-chip ds-chip-ip\">In progress</span> <span class=\"ds-chip ds-chip-rd\">Ready</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; font-family: 'Archivo', ui-sans-serif, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; } .ds-chip-ns { background: #ece9f2; color: #5b546a; } .ds-chip-ip { background: #fbedb8; color: #141018; } .ds-chip-rd { background: #4b2a8a; color: #fff; }"
+    },
+    {
+      "name": "Rail Navigation",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "Purple rail; active item becomes a white sheet.",
+      "html": "<nav class=\"ds-rail\"><a class=\"ds-nav ds-nav-active\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z\"/></svg>Dashboard</a><a class=\"ds-nav\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M7 15h10\"/></svg>Events</a></nav>",
+      "css": ".ds-rail { display: flex; flex-direction: column; width: 256px; padding: 12px; background: #4b2a8a; border-right: 2px solid #141018; } .ds-nav { display: flex; align-items: center; gap: 12px; margin: 4px 0; padding: 8px 12px; font-family: 'Archivo', ui-sans-serif, sans-serif; font-size: 15px; font-weight: 600; color: #e6ddf3; text-decoration: none; transition: background-color 150ms, color 150ms; } .ds-nav:hover { background: #3b2170; color: #fff; } .ds-nav:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; } .ds-nav-active, .ds-nav-active:hover { background: #fff; color: #3b2170; }"
+    },
+    {
+      "name": "Sheet",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "White sheet on Board Grey with a cut-letter header and View all link.",
+      "html": "<section class=\"ds-sheet\"><h2 class=\"ds-sheet-head\"><span>Coming up</span><a href=\"#\">View all</a></h2><p class=\"ds-sheet-empty\">No dates on the calendar.</p></section>",
+      "css": ".ds-sheet { background: #fff; border: 2px solid #141018; border-radius: 2px; font-family: 'Archivo', ui-sans-serif, sans-serif; color: #141018; } .ds-sheet-head { display: flex; align-items: center; justify-content: space-between; margin: 0; padding: 12px 16px; border-bottom: 2px solid #141018; } .ds-sheet-head span { font-family: 'Archivo Black', 'Archivo', sans-serif; font-size: 1rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.01em; } .ds-sheet-head a { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #4b2a8a; text-decoration: none; } .ds-sheet-head a:hover { text-decoration: underline; text-underline-offset: 3px; } .ds-sheet-empty { margin: 0; padding: 20px 16px; font-size: 0.875rem; color: #5b546a; }"
+    },
+    {
+      "name": "Tri-fold",
+      "kind": "custom",
+      "refersTo": "board",
+      "description": "Signature event board: Prepare | event under gold title strip | Results, mounted on purple.",
+      "html": "<div class=\"ds-fold\"><div class=\"ds-panel\"><h3>Prepare</h3><div class=\"ds-mount\"><p class=\"ds-empty\">No resources posted for this event yet.</p></div></div><div class=\"ds-panel ds-panel-mid\"><div class=\"ds-mount ds-strip\"><h2>Event name</h2><p>Study event</p></div><div class=\"ds-mount\"><div class=\"ds-row\"><span>Status</span><span class=\"ds-chip\">Not started</span></div><div class=\"ds-row\"><span>Progress</span><b>0%</b></div><div class=\"ds-track\"><div style=\"width:0%\"></div></div></div></div><div class=\"ds-panel\"><h3>Results</h3><div class=\"ds-mount\"><p class=\"ds-empty\">No practice tests logged for this event.</p></div></div></div>",
+      "css": ".ds-fold { display: grid; grid-template-columns: 1fr 1.3fr 1fr; background: #4b2a8a; border: 2px solid #141018; padding: 16px; font-family: 'Archivo', ui-sans-serif, sans-serif; font-variant-numeric: tabular-nums; color: #141018; animation: ds-fold-in 220ms cubic-bezier(0.16, 1, 0.3, 1); } @keyframes ds-fold-in { from { opacity: 0.4; transform: translateX(12px); } } @media (prefers-reduced-motion: reduce) { .ds-fold { animation: none; } } .ds-panel { display: flex; flex-direction: column; gap: 16px; padding: 4px 16px; min-width: 0; } .ds-panel-mid { border-left: 2px dashed #8665bd; border-right: 2px dashed #8665bd; } .ds-panel h3 { margin: 0; font-family: 'Archivo Black', 'Archivo', sans-serif; font-weight: 400; font-size: 1.125rem; line-height: 1; text-transform: uppercase; color: #fff; } .ds-mount { background: #fff; box-shadow: 0 0 0 4px #4b2a8a, 0 0 0 8px #141018; } .ds-strip { background: #f2c230; padding: 20px 16px; text-align: center; } .ds-strip h2 { margin: 0; font-family: 'Archivo Black', 'Archivo', sans-serif; font-weight: 400; font-size: 1.75rem; line-height: 1.25; text-transform: uppercase; } .ds-strip p { margin: 4px 0 0; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; } .ds-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #ddd8e6; font-size: 0.875rem; } .ds-row span:first-child { color: #5b546a; } .ds-track { height: 8px; margin: 0 16px 12px; background: #ece9f2; } .ds-track div { height: 100%; background: #4b2a8a; } .ds-chip { padding: 4px 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; background: #ece9f2; color: #5b546a; } .ds-empty { margin: 0; padding: 16px; font-size: 0.875rem; color: #5b546a; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Science Fair Tri-fold",
+    "overview": "Every surface is a display board. A Chantilly purple board carries the navigation rail and backs each event; white sheets are mounted on it, each one framed by a purple gap and a thin ink mat, the way paper is glued to a tri-fold. An event reads left to right like the board it imitates: what to prepare, the event and its team under a gold title strip, then results. Headings are cut letters (Archivo Black, uppercase) set over plain Archivo body.\n\nThe world is flat, square and dense. Depth comes from mounting and framing, never from blur. Every number uses tabular figures so scores, dates and counts line up in columns. Status words are a fixed vocabulary, and nothing is labeled twice. The single authored motion is the board sliding in when you switch events.\n\nThe system rejects the SaaS dashboard default: no greeting banner, no row of stat tiles, no soft rounded cards with drop shadows.",
+    "keyCharacteristics": [
+      "Purple board (rail, fold backing) with white mounted sheets on it",
+      "One gold title strip names each event",
+      "Cut-letter uppercase headings over a plain sans body",
+      "Near-square corners (2px), 2px ink borders, no blurred shadows",
+      "Tabular figures everywhere; fixed status vocabulary",
+      "One 220ms fold-in slide, removed under reduced motion"
+    ],
+    "rules": [
+      { "name": "The Board Is Purple Rule", "body": "Purple is the structure (rail, fold backing, sheet gap), not decoration. If a purple area is not something a sheet could be mounted on, or a primary action, it should not be purple.", "section": "colors" },
+      { "name": "The Gold Names It Rule", "body": "Gold strips name an event or flag a pinned item. Each event gets one strip. Gold Wash is the hover and the in-between state.", "section": "colors" },
+      { "name": "The Tabular Figures Rule", "body": "`font-variant-numeric: tabular-nums` is set on the root. Never turn it off, since scores, dates and counts must align.", "section": "typography" },
+      { "name": "The Cut Letter Rule", "body": "Archivo Black is always uppercase with 0.01em tracking. It is for headings, never for running text.", "section": "typography" },
+      { "name": "The Mounted, Not Lifted Rule", "body": "Shadows here are zero-blur frame rings. A blurred or offset drop shadow breaks the board.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do mount white sheets on the purple board with the Mount frame (4px purple gap, then 4px ink).",
+      "Do give each event exactly one gold title strip.",
+      "Do set headings in uppercase Archivo Black and body in Archivo, with tabular figures on every number.",
+      "Do keep spacing on the 4px module (4, 8, 12, 16, 24, 32, 40px).",
+      "Do use only the fixed status words: Not started, In progress, Ready.",
+      "Do use the 220ms fold-in (cubic-bezier(0.16, 1, 0.3, 1)) only when switching events, and keep the reduced-motion override.",
+      "Do show empty lists as empty, with a plain sentence saying what will appear."
+    ],
+    "donts": [
+      "Don't use blurred or offset drop shadows. The only shadow is the zero-blur Mount frame.",
+      "Don't round corners beyond 2px.",
+      "Don't build greeting banners, stat-tile rows or soft rounded cards.",
+      "Don't label a value twice, for example a heading that repeats what its chip or strip already says.",
+      "Don't invent status words, or colour a status outside its fixed chip pairing.",
+      "Don't use gold as a general background fill. It names or flags."
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Archivo Black', 'Archivo', ui-sans-serif, sans-serif;
+  --color-brand-50: #f3eff9;
+  --color-brand-100: #e6ddf3;
+  --color-brand-200: #cdbde8;
+  --color-brand-300: #a98fd4;
+  --color-brand-400: #8665bd;
+  --color-brand-500: #6c46ab;
+  --color-brand-600: #5a339c;
+  --color-brand-700: #4b2a8a;
+  --color-brand-800: #3b2170;
+  --color-brand-900: #2a1752;
+  --color-gold: #f2c230;
+  --color-gold-soft: #fbedb8;
+  --color-ink: #141018;
+  --color-board: #ece9f2;
+  --color-rule: #ddd8e6;
+  --color-muted: #5b546a;
+  --radius-sheet: 2px;
+}
+
+html {
+  font-variant-numeric: tabular-nums;
+  caret-color: var(--color-brand-700);
+  scrollbar-color: var(--color-brand-300) transparent;
+}
+
+body {
+  @apply bg-board text-ink antialiased;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+/* A white mounted sheet: square, framed by a thin ink mat. */
+@utility card {
+  @apply border-2 border-ink bg-white;
+  border-radius: var(--radius-sheet);
+}
+
+/* Cut-letter heading voice. */
+@utility cut {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 border-2 px-4 py-2 text-sm font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  border-radius: var(--radius-sheet);
+}
+
+@utility btn-primary {
+  @apply btn border-ink bg-brand-700 text-white hover:bg-brand-800;
+}
+
+@utility btn-secondary {
+  @apply btn border-ink bg-white text-ink hover:bg-gold-soft;
+}
+
+@utility btn-danger {
+  @apply btn border-ink bg-red-700 text-white hover:bg-red-800;
+}
+
+@utility btn-ghost {
+  @apply btn border-transparent text-muted hover:bg-white hover:text-ink;
+}
+
+@utility input {
+  @apply w-full border-2 border-ink bg-white px-3 py-2 text-sm outline-none focus:border-brand-700;
+  border-radius: var(--radius-sheet);
+}
+
+@utility label {
+  @apply mb-1 block text-xs font-bold tracking-wide text-ink uppercase;
+}
+
+/* Small square tag, used only where it carries state. */
+@utility chip {
+  @apply inline-flex items-center gap-1 px-2 py-1 text-[11px] font-bold tracking-wide uppercase;
+}
+
+/* Purple board backing for a tri-fold. */
+@utility board {
+  @apply bg-brand-700 p-3 sm:p-4;
+}
+
+/* Sheet mounted on the purple board: purple gap, then an ink mat line. */
+@utility mounted {
+  @apply bg-white;
+  box-shadow:
+    0 0 0 4px var(--color-brand-700),
+    0 0 0 8px var(--color-ink);
+}
+
+/* The one authored moment: switching events slides the next board in. */
+@keyframes fold-in {
+  from {
+    opacity: 0.4;
+    transform: translateX(12px);
+  }
+}
+
+@utility fold-in {
+  animation: fold-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

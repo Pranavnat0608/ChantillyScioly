@@ -1,0 +1,127 @@
+rules_version = '2';
+
+// Roles live in teams/{teamId}/members/{uid}.role: 'coach' | 'captain' | 'student'.
+// Coaches and captains are "staff". Only coaches can create or modify coaches.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function uid() { return request.auth.uid; }
+    function memberPath(teamId) { return /databases/$(database)/documents/teams/$(teamId)/members/$(uid()); }
+    function isMember(teamId) { return signedIn() && exists(memberPath(teamId)); }
+    function myRole(teamId) { return get(memberPath(teamId)).data.role; }
+    function isStaff(teamId) { return isMember(teamId) && myRole(teamId) in ['coach', 'captain']; }
+    function isCoach(teamId) { return isMember(teamId) && myRole(teamId) == 'coach'; }
+    function incoming() { return request.resource.data; }
+    function changed() { return incoming().diff(resource.data).affectedKeys(); }
+    function str(v, max) { return v is string && v.size() > 0 && v.size() <= max; }
+
+    // ---- User profiles: private to their owner ----
+    match /users/{userId} {
+      allow read: if signedIn() && uid() == userId;
+      allow create: if signedIn() && uid() == userId
+        && incoming().keys().hasOnly(['name', 'email', 'teamId', 'createdAt'])
+        && str(incoming().name, 100);
+      allow update: if signedIn() && uid() == userId
+        && changed().hasOnly(['name', 'teamId']);
+    }
+
+    // ---- Join codes: look up one code at a time; never list them ----
+    match /joinCodes/{code} {
+      allow get: if signedIn();
+      allow list: if false;
+      allow create: if signedIn() && (
+        isStaff(incoming().teamId)
+        || get(/databases/$(database)/documents/teams/$(incoming().teamId)).data.createdBy == uid()
+      );
+      allow delete: if isStaff(resource.data.teamId);
+    }
+
+    match /teams/{teamId} {
+      allow read: if isMember(teamId);
+      allow create: if signedIn()
+        && incoming().createdBy == uid()
+        && str(incoming().name, 120);
+      allow update: if isCoach(teamId)
+        || (isStaff(teamId) && changed().hasOnly(['joinCode']));
+      allow delete: if false;
+
+      // ---- Members / roles ----
+      match /members/{memberId} {
+        allow read: if isMember(teamId) || (signedIn() && uid() == memberId);
+
+        allow create: if signedIn() && (
+          // Team creator becomes its first coach.
+          (memberId == uid() && incoming().role == 'coach'
+            && get(/databases/$(database)/documents/teams/$(teamId)).data.createdBy == uid()
+            && !isMember(teamId))
+          // Self-join with a valid join code, always as a student.
+          || (memberId == uid() && incoming().role == 'student'
+            && get(/databases/$(database)/documents/joinCodes/$(incoming().joinCode)).data.teamId == teamId)
+          // Staff add someone; only coaches may add coaches.
+          || (isStaff(teamId) && (incoming().role in ['student', 'captain'] || isCoach(teamId)))
+        ) && incoming().role in ['coach', 'captain', 'student'];
+
+        allow update: if
+          // Members may rename themselves, nothing else.
+          (signedIn() && memberId == uid() && changed().hasOnly(['name']))
+          // Coaches can change anyone else's role.
+          || (isCoach(teamId) && memberId != uid() && incoming().role in ['coach', 'captain', 'student'])
+          // Captains can switch non-coaches between student and captain.
+          || (isStaff(teamId) && memberId != uid() && resource.data.role != 'coach'
+              && incoming().role in ['student', 'captain'] && changed().hasOnly(['role']));
+
+        allow delete: if (signedIn() && memberId == uid())
+          || (isCoach(teamId) && memberId != uid())
+          || (isStaff(teamId) && resource.data.role != 'coach');
+      }
+
+      // ---- Event board ----
+      match /events/{eventId} {
+        allow read: if isMember(teamId);
+        allow create, delete: if isStaff(teamId);
+        allow update: if isStaff(teamId)
+          // Assigned students can update their own event's progress.
+          || (isMember(teamId) && uid() in resource.data.assignees
+              && changed().hasOnly(['status', 'progress', 'notes', 'updatedAt']));
+      }
+
+      // ---- Shared resources ----
+      match /resources/{resourceId} {
+        allow read: if isMember(teamId);
+        allow create: if isMember(teamId) && incoming().authorUid == uid() && str(incoming().title, 200);
+        allow update, delete: if isStaff(teamId) || (isMember(teamId) && resource.data.authorUid == uid());
+      }
+
+      // ---- Practice scores: students see only their own ----
+      match /scores/{scoreId} {
+        allow read: if isStaff(teamId) || (isMember(teamId) && resource.data.studentUid == uid());
+        allow create: if isMember(teamId)
+          && (isStaff(teamId) || incoming().studentUid == uid())
+          && incoming().score is number && incoming().maxScore is number
+          && incoming().maxScore > 0 && incoming().score >= 0 && incoming().score <= incoming().maxScore;
+        allow update, delete: if isStaff(teamId) || (isMember(teamId) && resource.data.studentUid == uid());
+      }
+
+      // ---- Announcements + replies ----
+      match /announcements/{postId} {
+        allow read: if isMember(teamId);
+        allow create: if isStaff(teamId) && incoming().authorUid == uid();
+        allow update: if isStaff(teamId) || (isMember(teamId) && changed().hasOnly(['replyCount']));
+        allow delete: if isStaff(teamId);
+
+        match /replies/{replyId} {
+          allow read: if isMember(teamId);
+          allow create: if isMember(teamId) && incoming().authorUid == uid() && str(incoming().body, 2000);
+          allow delete: if isStaff(teamId) || (isMember(teamId) && resource.data.authorUid == uid());
+        }
+      }
+
+      // ---- Calendar ----
+      match /calendar/{itemId} {
+        allow read: if isMember(teamId);
+        allow write: if isStaff(teamId);
+      }
+    }
+  }
+}
