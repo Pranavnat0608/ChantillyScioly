@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../lib/AuthContext'
 import { ErrorNote, Icon } from '../components/ui'
 import { Logo } from '../components/Layout'
+import DeleteAccount from '../components/DeleteAccount'
 
 export default function Onboarding() {
   const { profile, createTeam, joinTeam, logout } = useAuth()
@@ -88,9 +89,12 @@ export default function Onboarding() {
           </form>
         )}
 
-        <button onClick={logout} className="mt-6 w-full text-center text-sm text-muted hover:text-ink">
-          Sign out
-        </button>
+        <div className="mt-6 flex items-center justify-between border-t-2 border-ink pt-4">
+          <button onClick={logout} className="text-sm font-bold text-muted hover:text-ink">
+            Sign out
+          </button>
+          <DeleteAccount />
+        </div>
       </div>
     </div>
   )

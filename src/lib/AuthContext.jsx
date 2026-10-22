@@ -1,7 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
+  EmailAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
@@ -12,12 +15,15 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
   setDoc,
   updateDoc,
+  where,
+  writeBatch,
 } from 'firebase/firestore'
 import { auth, db } from './firebase'
 import { generateJoinCode, isStaffRole } from './constants'
@@ -30,6 +36,7 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(undefined)
   const [member, setMember] = useState(undefined)
   const [team, setTeam] = useState(undefined)
+  const deleting = useRef(false)
 
   useEffect(() => onAuthStateChanged(auth, (u) => setUser(u ?? null)), [])
 
@@ -43,7 +50,7 @@ export function AuthProvider({ children }) {
     return onSnapshot(ref, async (snap) => {
       if (snap.exists()) {
         setProfile({ id: snap.id, ...snap.data() })
-      } else {
+      } else if (!deleting.current) {
         // Profile missing (e.g. sign-up interrupted) — recreate it.
         const fresh = {
           name: user.displayName || user.email.split('@')[0],
@@ -165,6 +172,35 @@ export function AuthProvider({ children }) {
       async leaveTeam() {
         await deleteDoc(doc(db, 'teams', activeTeamId, 'members', user.uid))
         await updateDoc(doc(db, 'users', user.uid), { teamId: null })
+      },
+
+      /**
+       * Permanently deletes the signed-in user's account: their practice scores,
+       * team membership, profile, and finally the Firebase Auth login. Resources,
+       * announcements, and replies they posted stay with the team.
+       */
+      async deleteAccount(password) {
+        const current = auth.currentUser
+        await reauthenticateWithCredential(current, EmailAuthProvider.credential(current.email, password))
+        deleting.current = true
+        try {
+          if (activeTeamId) {
+            const mine = await getDocs(
+              query(collection(db, 'teams', activeTeamId, 'scores'), where('studentUid', '==', current.uid)),
+            )
+            const batch = writeBatch(db)
+            mine.forEach((d) => batch.delete(d.ref))
+            await batch.commit()
+            // Last one out: retire the join code so nobody joins an empty team.
+            const othersLeft = roster.some((m) => m.id !== current.uid)
+            if (!othersLeft && team?.joinCode) await deleteDoc(doc(db, 'joinCodes', team.joinCode)).catch(() => {})
+          }
+          await deleteDoc(doc(db, 'users', current.uid))
+          if (activeTeamId) await deleteDoc(doc(db, 'teams', activeTeamId, 'members', current.uid))
+          await deleteUser(current)
+        } finally {
+          deleting.current = false
+        }
       },
 
       async updateName(name) {

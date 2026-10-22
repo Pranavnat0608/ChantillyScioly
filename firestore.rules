@@ -24,6 +24,7 @@ service cloud.firestore {
         && str(incoming().name, 100);
       allow update: if signedIn() && uid() == userId
         && changed().hasOnly(['name', 'teamId']);
+      allow delete: if signedIn() && uid() == userId;
     }
 
     // ---- Join codes: look up one code at a time; never list them ----

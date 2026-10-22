@@ -4,6 +4,7 @@ import { db } from '../lib/firebase'
 import { useAuth } from '../lib/AuthContext'
 import { generateJoinCode } from '../lib/constants'
 import { ErrorNote, PageHeader, RoleBadge } from '../components/ui'
+import DeleteAccount from '../components/DeleteAccount'
 
 export default function Settings() {
   const { profile, role, team, teamId, isCoach, isStaff, roster, updateName, leaveTeam, resetPassword, user } = useAuth()
@@ -33,6 +34,7 @@ export default function Settings() {
 
   const otherCoaches = roster.filter((m) => m.role === 'coach' && m.id !== user.uid).length
   const canLeave = !isCoach || otherCoaches > 0
+  const othersOnTeam = roster.some((m) => m.id !== user.uid)
 
   return (
     <>
@@ -107,6 +109,20 @@ export default function Settings() {
             </button>
             {!canLeave && <p className="text-xs text-muted">Make another member a coach before leaving.</p>}
           </div>
+        </section>
+
+        <section className="card p-5 lg:col-span-2">
+          <h2 className="cut mb-1 text-base">Delete account</h2>
+          <p className="mb-4 max-w-xl text-sm text-muted">
+            Permanently remove your login, your practice scores and your place on the team.
+          </p>
+          <DeleteAccount
+            blockedReason={
+              isCoach && otherCoaches === 0 && othersOnTeam
+                ? 'You are the only coach. Make another member a coach on the Roster first.'
+                : null
+            }
+          />
         </section>
       </div>
     </>
